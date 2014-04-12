@@ -1,0 +1,15 @@
+#!/system/bin/sh
+#
+. /system/etc/init.d.cfg
+
+if $minfree; then
+	if [ -e /sys/module/lowmemorykiller/parameters ]; then
+		echo "10" > /proc/sys/vm/swappiness;
+		echo "22" > /proc/sys/vm/dirty_ratio;
+		echo "50" > /proc/sys/vm/vfs_cache_pressure;
+		echo "4" > /proc/sys/vm/dirty_background_ratio;
+		echo "0,1,2,4,6,15" > /sys/module/lowmemorykiller/parameters/adj;
+		echo "2560,4096,6144,12288,14336,18432" > /sys/module/lowmemorykiller/parameters/minfree;
+		echo "Minfree Tweaks Starting At $( date +"%m-%d-%Y %H:%M:%S" )" | tee -a /data/FusionLogs/tweaks.log;
+	fi
+fi

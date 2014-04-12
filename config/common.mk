@@ -132,7 +132,37 @@ PRODUCT_PACKAGES += \
     LatinIME \
     BluetoothExt
 
-# Optional CM packages
+# init.d support
+PRODUCT_COPY_FILES += \
+    vendor/ldroid/prebuilt/common/bin/sysinit:system/bin/sysinit \
+    vendor/ldroid/prebuilt/common/etc/helpers.sh:system/etc/helpers.sh \
+    vendor/ldroid/prebuilt/common/etc/init.d.cfg:system/etc/init.d.cfg \
+    vendor/ldroid/prebuilt/common/etc/sysctl.conf:system/etc/sysctl.conf \
+    vendor/ldroid/prebuilt/common/etc/init.d/00check:system/etc/init.d/00check \
+    vendor/ldroid/prebuilt/common/etc/init.d/02zipalign:system/etc/init.d/02zipalign \
+    vendor/ldroid/prebuilt/common/etc/init.d/03sysctl:system/etc/init.d/03sysctl \
+    vendor/ldroid/prebuilt/common/etc/init.d/04firstboot:system/etc/init.d/04firstboot \
+    vendor/ldroid/prebuilt/common/etc/init.d/05freemem:system/etc/init.d/05freemem \
+    vendor/ldroid/prebuilt/common/etc/init.d/06removecache:system/etc/init.d/06removecache \
+    vendor/ldroid/prebuilt/common/etc/init.d/07fixperms:system/etc/init.d/07fixperms \
+    vendor/ldroid/prebuilt/common/etc/init.d/09cron:system/etc/init.d/09cron \
+    vendor/ldroid/prebuilt/common/etc/init.d/10sdboost:system/etc/init.d/10sdboost \
+    vendor/ldroid/prebuilt/common/etc/init.d/11battery:system/etc/init.d/11battery \
+    vendor/ldroid/prebuilt/common/etc/init.d/12touch:system/etc/init.d/12touch \
+    vendor/ldroid/prebuilt/common/etc/init.d/13minfree:system/etc/init.d/13minfree \
+    vendor/ldroid/prebuilt/common/etc/init.d/14gpurender:system/etc/init.d/14gpurender \
+    vendor/ldroid/prebuilt/common/etc/init.d/15sleepers:system/etc/init.d/15sleepers \
+    vendor/ldroid/prebuilt/common/etc/init.d/16journalism:system/etc/init.d/16journalism \
+    vendor/ldroid/prebuilt/common/etc/init.d/17sqlite3:system/etc/init.d/17sqlite3 \
+    vendor/ldroid/prebuilt/common/etc/init.d/18wifisleep:system/etc/init.d/18wifisleep \
+    vendor/ldroid/prebuilt/common/etc/init.d/19iostats:system/etc/init.d/19iostats \
+    vendor/ldroid/prebuilt/common/etc/init.d/20setrenice:system/etc/init.d/20setrenice \
+    vendor/ldroid/prebuilt/common/etc/init.d/21tweaks:system/etc/init.d/21tweaks \
+    vendor/ldroid/prebuilt/common/etc/init.d/24speedy_modified:system/etc/init.d/24speedy_modified \
+    vendor/ldroid/prebuilt/common/etc/init.d/25loopy_smoothness_tweak:system/etc/init.d/25loopy_smoothness_tweak \
+    vendor/ldroid/prebuilt/common/etc/init.d/98tweaks:system/etc/init.d/98tweaks
+
+# Optional packages
 PRODUCT_PACKAGES += \
     VoicePlus \
     Basic \
