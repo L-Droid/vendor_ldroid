@@ -183,7 +183,6 @@ PRODUCT_COPY_FILES += \
 
 # Custom CM packages
 PRODUCT_PACKAGES += \
-<<<<<<< HEAD
     Trebuchet \
     audio_effects.conf \
     CMWallpapers \
@@ -383,3 +382,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 
 -include vendor/cyngn/product.mk
+
+ifeq ($(USE_PREBUILT_CHROMIUM),1)
+ifeq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
+
+$(call inherit-product-if-exists, prebuilts/chromium/$(TARGET_DEVICE)/chromium_prebuilt.mk)
+
+endif
+endif
