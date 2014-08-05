@@ -183,6 +183,7 @@ PRODUCT_COPY_FILES += \
 
 # Custom CM packages
 PRODUCT_PACKAGES += \
+<<<<<<< HEAD
     Trebuchet \
     audio_effects.conf \
     CMWallpapers \
@@ -196,6 +197,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     org.cyanogenmod.hardware \
     org.cyanogenmod.hardware.xml
+
+# HFM Files
+PRODUCT_COPY_FILES += \
+    vendor/ldroid/prebuilt/etc/hosts.alt:system/etc/hosts.alt \
+    vendor/ldroid/prebuilt/etc/hosts.og:system/etc/hosts.og
 
 # Extra tools in CM
 PRODUCT_PACKAGES += \
