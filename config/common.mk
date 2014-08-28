@@ -1,7 +1,7 @@
 PRODUCT_BRAND ?= cyanogenmod
 
 SUPERUSER_EMBEDDED := true
-SUPERUSER_PACKAGE_PREFIX := com.android.settings.cyanogenmod.superuser
+SUPERUSER_PACKAGE_PREFIX := com.android.settings.ldroid.superuser
 
 ifneq ($(TARGET_SCREEN_WIDTH) $(TARGET_SCREEN_HEIGHT),$(space))
 # determine the smaller dimension
@@ -38,10 +38,10 @@ endif
 
 ifdef CM_NIGHTLY
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.rommanager.developerid=cyanogenmodnightly
+    ro.rommanager.developerid=ldroid
 else
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.rommanager.developerid=cyanogenmod
+    ro.rommanager.developerid=ldroid
 endif
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
@@ -66,10 +66,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.build.selinux=1
 
-# Disable multithreaded dexopt by default
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.dalvik.multithread=false
-
 # Thank you, please drive thru!
 PRODUCT_PROPERTY_OVERRIDES += persist.sys.dun.override=0
 
@@ -87,8 +83,10 @@ ifneq ($(WITH_GMS),true)
 PRODUCT_COPY_FILES += \
     vendor/ldroid/prebuilt/common/bin/backuptool.sh:system/bin/backuptool.sh \
     vendor/ldroid/prebuilt/common/bin/backuptool.functions:system/bin/backuptool.functions \
-    vendor/ldroid/prebuilt/common/bin/50-cm.sh:system/addon.d/50-cm.sh \
-    vendor/ldroid/prebuilt/common/bin/blacklist:system/addon.d/blacklist
+    vendor/ldroid/prebuilt/common/bin/50-ldroid.sh:system/addon.d/50-ldroid.sh \
+    vendor/ldroid/prebuilt/common/bin/blacklist:system/addon.d/blacklist \
+    vendor/ldroid/prebuilt/common/bin/99-backup.sh:system/addon.d/99-backup.sh \
+    vendor/ldroid/prebuilt/common/etc/backup.conf:system/etc/backup.conf
 endif
 
 # Signature compatibility validation
@@ -106,7 +104,7 @@ PRODUCT_COPY_FILES += \
 
 # CM-specific init file
 PRODUCT_COPY_FILES += \
-    vendor/ldroid/prebuilt/common/etc/init.local.rc:root/init.cm.rc
+    vendor/ldroid/prebuilt/common/etc/init.local.rc:root/init.ldroid.rc
 
 # Bring in camera effects
 PRODUCT_COPY_FILES +=  \
@@ -140,18 +138,28 @@ PRODUCT_PACKAGES += \
     Basic \
     libemoji
 
+# Screen recorder
+PRODUCT_PACKAGES += \
+    ScreenRecorder \
+    libscreenrecorder
+
+# Omni Apps
+PRODUCT_PACKAGES += \
+    OmniSwitch
+
+# Viper4Android
+PRODUCT_COPY_FILES += \
+    vendor/ldroid/prebuilt/common/etc/viper/ViPER4Android.apk:system/app/ViPER4Android.apk
+
 # Custom CM packages
 PRODUCT_PACKAGES += \
     Launcher3 \
     Trebuchet \
-    DSPManager \
-    libcyanogen-dsp \
     audio_effects.conf \
     CMWallpapers \
     Apollo \
     CMFileManager \
     LockClock \
-    CMUpdater \
     CMFota \
     CMAccount \
     CMHome
