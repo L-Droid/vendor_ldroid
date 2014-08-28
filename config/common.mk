@@ -1,7 +1,7 @@
 PRODUCT_BRAND ?= cyanogenmod
 
 SUPERUSER_EMBEDDED := true
-SUPERUSER_PACKAGE_PREFIX := com.android.settings.ldroid.superuser
+SUPERUSER_PACKAGE_PREFIX := com.android.settings.cyanogenmod.superuser
 
 ifneq ($(TARGET_SCREEN_WIDTH) $(TARGET_SCREEN_HEIGHT),$(space))
 # determine the smaller dimension
@@ -177,17 +177,12 @@ PRODUCT_PACKAGES += \
     ScreenRecorder \
     libscreenrecorder
 
-# Omni Apps
-PRODUCT_PACKAGES += \
-    OmniSwitch
-
 # Viper4Android
 PRODUCT_COPY_FILES += \
     vendor/ldroid/prebuilt/common/etc/viper/ViPER4Android.apk:system/app/ViPER4Android.apk
 
 # Custom CM packages
 PRODUCT_PACKAGES += \
-    Launcher3 \
     Trebuchet \
     audio_effects.conf \
     CMWallpapers \
@@ -195,7 +190,6 @@ PRODUCT_PACKAGES += \
     CMFileManager \
     LockClock \
     CMFota \
-    CMAccount \
     CMHome
 
 # CM Hardware Abstraction Framework
