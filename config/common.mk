@@ -64,15 +64,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.android.dataroaming=false
 
 PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.dun.override=0 \
+    ro.adb.secure=3 \
+    persist.sys.root_access=3 \
     ro.build.selinux=1
-
-# Thank you, please drive thru!
-PRODUCT_PROPERTY_OVERRIDES += persist.sys.dun.override=0
-
-ifneq ($(TARGET_BUILD_VARIANT),eng)
-# Enable ADB authentication
-ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=1
-endif
 
 # Copy over the changelog to the device
 PRODUCT_COPY_FILES += \
@@ -142,7 +137,7 @@ PRODUCT_COPY_FILES += \
     vendor/ldroid/prebuilt/common/etc/helpers.sh:system/etc/helpers.sh \
     vendor/ldroid/prebuilt/common/etc/init.d.cfg:system/etc/init.d.cfg \
     vendor/ldroid/prebuilt/common/etc/sysctl.conf:system/etc/sysctl.conf \
-    vendor/ldroid/prebuilt/common/etc/init.d/00check:system/etc/init.d/00check \
+    vendor/ldroid/prebuilt/common/etc/init.d/01check:system/etc/init.d/01check \
     vendor/ldroid/prebuilt/common/etc/init.d/02zipalign:system/etc/init.d/02zipalign \
     vendor/ldroid/prebuilt/common/etc/init.d/03sysctl:system/etc/init.d/03sysctl \
     vendor/ldroid/prebuilt/common/etc/init.d/04firstboot:system/etc/init.d/04firstboot \
@@ -177,20 +172,17 @@ PRODUCT_PACKAGES += \
     ScreenRecorder \
     libscreenrecorder
 
-# Viper4Android
-PRODUCT_COPY_FILES += \
-    vendor/ldroid/prebuilt/common/etc/viper/ViPER4Android.apk:system/app/ViPER4Android.apk
-
 # Custom CM packages
 PRODUCT_PACKAGES += \
     Trebuchet \
+    DSPManager \
+    libcyanogen-dsp \
     audio_effects.conf \
     CMWallpapers \
-    Apollo \
     CMFileManager \
     LockClock \
-    CMFota \
-    CMHome
+    CMHome \
+    CMAccount
 
 # CM Hardware Abstraction Framework
 PRODUCT_PACKAGES += \
@@ -246,28 +238,20 @@ PRODUCT_PACKAGES += \
     libFFmpegExtractor \
     libnamparser
 
-# These packages are excluded from user builds
-ifneq ($(TARGET_BUILD_VARIANT),user)
-
+# Required packages
 PRODUCT_PACKAGES += \
     procmem \
     procrank \
     Superuser \
     su
 
+PRODUCT_COPY_FILES += \
+    external/koush/Superuser/init.superuser.rc:root/init.superuser.rc
+
 # Terminal Emulator
 PRODUCT_COPY_FILES +=  \
     vendor/ldroid/proprietary/Term.apk:system/app/Term.apk \
     vendor/ldroid/proprietary/lib/armeabi/libjackpal-androidterm4.so:system/lib/libjackpal-androidterm4.so
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.root_access=1
-else
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.root_access=0
-
-endif
 
 # easy way to extend to add more packages
 -include vendor/extra/product.mk
