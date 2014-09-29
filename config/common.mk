@@ -227,9 +227,17 @@ PRODUCT_PACKAGES += \
     ssh-keygen \
     start-ssh
 
+# Disable excessive dalvik debug messages
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.debug.alloc=0
+
 # rsync
 PRODUCT_PACKAGES += \
     rsync
+
+# Workaround for NovaLauncher zipalign fails
+PRODUCT_COPY_FILES += \
+    vendor/ldroid/prebuilt/common/app/NovaLauncher.apk:system/app/NovaLauncher.apk
 
 # Stagefright FFMPEG plugin
 PRODUCT_PACKAGES += \
@@ -328,15 +336,36 @@ else
     endif
 endif
 
+# Versioning System
+PRODUCT_VERSION_MAJOR = 4
+PRODUCT_VERSION_MINOR = 0
+PRODUCT_VERSION_MAINTENANCE = 0-cm
+ifdef LDROID_BUILD_EXTRA
+    LDROID_POSTFIX := -$(LDROID_BUILD_EXTRA)
+
+endif
+ifndef LDROID_BUILD_TYPE
+    LDROID_BUILD_TYPE := UNOFFICIAL
+    PLATFORM_VERSION_CODENAME := UNOFFICIAL
+    LDROID_POSTFIX := -$(shell date +"%Y%m%d")
+endif
+
+# Set all versions
+LDROID_VERSION := L-Droid-v$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE)
+LDROID_MOD_VERSION := L-Droid-v$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE)-$(LDROID_BUILD)-$(LDROID_POSTFIX)
+
 PRODUCT_PROPERTY_OVERRIDES += \
-  ro.cm.version=$(CM_VERSION) \
-  ro.cm.releasetype=$(CM_BUILDTYPE) \
-  ro.modversion=$(CM_VERSION) \
-  ro.cmlegal.url=http://www.cyanogenmod.org/docs/privacy
+    BUILD_DISPLAY_ID=$(BUILD_ID) \
+    ldroid.ota.version=v$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE) \
+    ro.ldroid.version=v$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE) \
+    ro.modversion=$(LDROID_MOD_VERSION) \
+    ro.ldroid.buildtype=$(LDROID_BUILD_TYPE) \
+    ro.ldroid.releasetype=$(LDROID_BUILD_TYPE) \
+    ro.cmlegal.url=http://www.cyanogenmod.org/docs/privacy
 
 -include vendor/cm-priv/keys/keys.mk
 
-CM_DISPLAY_VERSION := $(CM_VERSION)
+CM_DISPLAY_VERSION := $(LDROID_VERSION)
 
 ifneq ($(PRODUCT_DEFAULT_DEV_CERTIFICATE),)
 ifneq ($(PRODUCT_DEFAULT_DEV_CERTIFICATE),build/target/product/security/testkey)
